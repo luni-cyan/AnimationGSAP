@@ -1,16 +1,26 @@
 <script setup>
 import { ref } from 'vue'
-import { Flip } from '../gsap.js'
+import { Draggable, Flip } from '../gsap.js'
 
 const box1 = ref(null)
 const box1Content = ref('Box 1')
+const isMove = ref(false)
 
 function flipBoxes() {
   const container = document.querySelector('.boxContainer')
+  const container1 = document.querySelector('.boxContainer1')
   const box = document.querySelector('.box')
   const state = Flip.getState(box)
-  container.appendChild(box)
-  Flip.from(state, { duration: 0.6, ease: 'sine.in' })
+  if (!isMove.value) {
+    container.appendChild(box)
+    Flip.from(state, { duration: 0.6, ease: 'sine.in' })
+  }
+  else {
+    container.removeChild(box)
+    container1.appendChild(box)
+    Flip.from(state, { duration: 0.3, ease: 'sine.in' })
+  }
+  isMove.value = !isMove.value
 }
 </script>
 
@@ -20,8 +30,10 @@ function flipBoxes() {
       Flip
     </button>
     <div class="boxContainer" />
-    <div ref="box1" class="box">
-      {{ box1Content }}
+    <div class="boxContainer1">
+      <div ref="box1" class="box">
+        {{ box1Content }}
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +57,10 @@ function flipBoxes() {
   grid-area: 2/ 2/ span 1/ span 1;
 }
 
+.boxContainer1 {
+  grid-area: 1/ 3/ span 1/ span 1;
+}
+
 .flipButton {
   grid-area: 1/ 1/ span 1/ span 1;
 }
@@ -59,6 +75,5 @@ function flipBoxes() {
   color: white;
   border-radius: 10px;
   font-size: 20px;
-  grid-area: 1/ 3/ span 1/ span 1;
 }
 </style>
