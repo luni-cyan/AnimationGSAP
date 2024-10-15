@@ -1,12 +1,12 @@
 <script setup>
-import Draggable from './components/Draggable.vue'
+// import Draggable from './components/Draggable.vue'
 import Flip from './components/Flip.vue'
-import Timeline from './components/Timeline.vue'
+// import Timeline from './components/Timeline.vue'
 </script>
 
 <template>
-  <Draggable />
-  <!-- <Flip /> -->
+  <!-- <Draggable /> -->
+  <Flip />
   <!-- <Timeline /> -->
 </template>
 

@@ -1,5 +1,5 @@
 <script setup>
-import { gsap } from '../gsap.js'
+import { gsap } from 'gsap'
 
 function scrollTo() {
   gsap.to(window, { duration: 2, scrollTo: 800 })
@@ -66,11 +66,11 @@ function scrollToAnchors(item) {
 
 <style scope>
 .container {
-    width: 100%;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

@@ -1,6 +1,6 @@
 <script setup>
+import { Draggable } from 'gsap/all'
 import { onMounted, ref } from 'vue'
-import { Draggable } from '../gsap.js'
 
 const boxes = ref([])
 const container = ref(null)
@@ -10,26 +10,26 @@ onMounted(() => {
 
   boxes.value.forEach((box) => {
     Draggable.create(box, {
-      type: 'x',
       bounds: container.value,
-      // onDragEnd: () => {
-      //   const boxPosition = box.getBoundingClientRect()
-      //   const boxCenterX = boxPosition.x + boxPosition.width / 2
-      //   const boxCenterY = boxPosition.y + boxPosition.height / 2
-      //   const bonusAreaPosition = bonusArea.value.getBoundingClientRect()
-      //   const centerX = bonusAreaPosition.x + bonusAreaPosition.width / 2
-      //   const centerY = bonusAreaPosition.y + bonusAreaPosition.height / 2
-      //   const radius = bonusAreaPosition.width / 2
-      //   const distance = Math.sqrt(
-      //     (boxCenterX - centerX) ** 2 + (boxCenterY - centerY) ** 2,
-      //   )
-      //   if (distance <= radius) {
-      //     box.style.backgroundColor = 'green'
-      //   }
-      //   else {
-      //     box.style.backgroundColor = 'red'
-      //   }
-      // },
+      onDragEnd: () => {
+        const boxPosition = box.getBoundingClientRect()
+        const boxCenterX = boxPosition.x + boxPosition.width / 2
+        const boxCenterY = boxPosition.y + boxPosition.height / 2
+        const boxRadius = boxPosition.width / 2
+        const bonusAreaPosition = bonusArea.value.getBoundingClientRect()
+        const centerX = bonusAreaPosition.x + bonusAreaPosition.width / 2
+        const centerY = bonusAreaPosition.y + bonusAreaPosition.height / 2
+        const radius = bonusAreaPosition.width / 2
+        const distance = Math.sqrt(
+          (boxCenterX - centerX) ** 2 + (boxCenterY - centerY) ** 2,
+        )
+        if (distance <= radius - boxRadius) {
+          box.style.backgroundColor = 'green'
+        }
+        else {
+          box.style.backgroundColor = 'black'
+        }
+      },
     })
   })
   Draggable.create('.contentBoxText', {
@@ -100,9 +100,9 @@ onMounted(() => {
 .container {
   background-color: aliceblue;
   width: 500px;
-  height: 300px;
+  height: 500px;
   display: grid;
-  grid-template: 1fr 1fr/ 1fr 1fr 1fr;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
   justify-items: center;
   align-items: center;
 }
@@ -115,6 +115,7 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   font: 700 24px '';
+  border-radius: 50%;
 }
 
 .yellow {
@@ -130,6 +131,7 @@ onMounted(() => {
   height: 200px;
   border-radius: 50%;
   background-color: cornflowerblue;
+  grid-area: 2/ 3/ span 1/ span 1;
 }
 
 .contentBox {

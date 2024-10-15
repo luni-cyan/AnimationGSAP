@@ -1,12 +1,12 @@
 <script setup>
+import { gsap } from 'gsap'
 import { onMounted, ref } from 'vue'
-import { gsap } from '../gsap.js'
 
 const main = ref(null)
 let _ctx
 
 onMounted(() => {
-  ctx = gsap.context((self) => {
+  _ctx = gsap.context((self) => {
     const boxes = self.selector('.box')
     gsap.to(boxes[0], {
       x: 100,
@@ -35,20 +35,20 @@ onMounted(() => {
         scrub: true,
       },
     })
-    /*
-        可以使用 timeline 簡化多個元素動畫從同個元素觸發
-                const timeline = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: boxes[0],
-                        start: 'top center',
-                        end: 'top 20%',
-                        scrub: true,
-                    }
-                })
-                timeline.to(boxes[0], { x: 100 })
-                .to(boxes[1], { x: -200 }, 0)
-                .to(boxes[2], { y: -200 }, 0);
-        */
+
+    /* 可以使用 timeline 簡化多個元素動畫從同個元素觸發
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: boxes[0],
+        start: 'top center',
+        end: 'top 20%',
+        scrub: true,
+      }
+    })
+    timeline.to(boxes[0], { x: 100 })
+      .to(boxes[1], { x: -200 }, 0)
+      .to(boxes[2], { y: -200 }, 0);
+    */
   }, main.value)
 })
 </script>

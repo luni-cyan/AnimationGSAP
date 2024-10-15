@@ -1,6 +1,6 @@
 <script setup>
+import { gsap } from 'gsap'
 import { onMounted, ref } from 'vue'
-import { gsap } from '../gsap.js'
 
 const container = ref(null)
 let _ctx
