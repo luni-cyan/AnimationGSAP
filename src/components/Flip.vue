@@ -63,7 +63,8 @@ function toMainHandler(index) {
     </div>
   </div>
   <div class="gallery">
-    <figure v-for="(animal, index) in animalsList" :key="index" class="figureImg" :data-grid="`img-${index + 1}`">
+    <figure v-for="(animal, index) in animalsList" :key="`figure_${index}`" class="figureImg"
+      :data-grid="`img-${index + 1}`">
       <img :src="animal.image" alt="" :title="animal.name" @click="toMainHandler(index)">
     </figure>
   </div>
