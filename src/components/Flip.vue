@@ -19,7 +19,7 @@ function flipBoxes() {
   const state = Flip.getState(box)
   if (!isMove.value) {
     container.appendChild(box)
-    Flip.from(state, { duration: 0.6, ease: 'sine.in' })
+    Flip.from(state, { duration: 0.3, ease: 'sine.in' })
   }
   else {
     container.removeChild(box)
@@ -30,21 +30,22 @@ function flipBoxes() {
 }
 
 const animalsList = ref([{ name: '鹿', image: img1 }, { name: '狐', image: img2 }, { name: '貓', image: img3 }, { name: '獅', image: img4 }, { name: '無尾熊', image: img5 }, { name: '虎', image: img6 }])
-const mainAnimal = ref(animalsList.value[0])
+
+const mainIndex = ref(0)
 function toMainHandler(index) {
-  if (index === 0)
+  if (index === mainIndex.value)
     return
   const animals = gsap.utils.toArray('.figureImg')
+  const mainAnimal = animals[mainIndex.value]
   const state = Flip.getState(animals)
-
-  const temp = animalsList.value[0]
-  animalsList.value[0] = animalsList.value[index]
-  animalsList.value[index] = temp
-  mainAnimal.value = animalsList.value[0]
+  const temp = animals[index].dataset.grid
+  animals[index].dataset.grid = 'img-1'
+  mainAnimal.dataset.grid = temp
+  mainIndex.value = index
   Flip.from(state, {
     absolute: true,
     ease: 'power1.inOut',
-    duration: 0.5,
+    duration: 0.8,
   })
 }
 </script>
@@ -62,7 +63,7 @@ function toMainHandler(index) {
     </div>
   </div>
   <div class="gallery">
-    <figure v-for="(animal, index) in animalsList" :key="animal.name" class="figureImg" :data-grid="`img-${index + 1}`">
+    <figure v-for="(animal, index) in animalsList" :key="index" class="figureImg" :data-grid="`img-${index + 1}`">
       <img :src="animal.image" alt="" :title="animal.name" @click="toMainHandler(index)">
     </figure>
   </div>
